@@ -71,3 +71,42 @@ implement global self-attention over a 2D featuremap. This allows us to obtain a
   The visualization results will be stored in ```train_log/ycb/eval_results/pose_vis```.
 ## Results
 - Evaluation result without any post refinement on the YCB-Video dataset:
+  <table class="tg">
+  <thead>
+    <tr>
+      <th class="tg-0pky">Epochs </th>
+      <th class="tg-c3ow" colspan="2" style="text-align: center">FFB6D</th>
+      <th class="tg-c3ow" colspan="2" style="text-align: center">FFB6D_MHSA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">ADDS</td>
+      <td class="tg-0pky">ADD(S)</td>
+      <td class="tg-0pky">ADDS</td>
+      <td class="tg-0pky">ADD(S)</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">20</td>
+      <td class="tg-0pky">89.4</td>
+      <td class="tg-0pky">79.1</td>
+      <td class="tg-fymr" style="font-weight:bold">91.9</td>
+      <td class="tg-fymr" style="font-weight:bold">84.3</td>
+    </tr>
+      <tr>
+      <td class="tg-0pky">40</td>
+      <td class="tg-0pky">91.0</td>
+      <td class="tg-0pky">83.2</td>
+      <td class="tg-fymr" style="font-weight:bold">93.8</td>
+      <td class="tg-fymr" style="font-weight:bold">87.8</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">60</td>
+      <td class="tg-0pky">93.1</td>
+      <td class="tg-0pky">86.4</td>
+      <td class="tg-fymr" style="font-weight:bold">94.4</td>
+      <td class="tg-fymr" style="font-weight:bold">89.1</td>
+    </tr>
+  </tbody>
+  </table>
