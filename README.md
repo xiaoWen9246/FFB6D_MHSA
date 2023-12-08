@@ -38,14 +38,36 @@ implement global self-attention over a 2D featuremap. This allows us to obtain a
   ```
 
 ## Datasets
-- **LineMOD:** Download the preprocessed LineMOD dataset from [onedrive link](https://hkustconnect-my.sharepoint.com/:u:/g/personal/yhebk_connect_ust_hk/ETW6iYHDbo1OsIbNJbyNBkABF7uJsuerB6c0pAiiIv6AHw?e=eXM1UE) or [google drive link](https://drive.google.com/drive/folders/19ivHpaKm9dOrr12fzC8IDFczWRPFxho7) (refer from [DenseFusion](https://github.com/j96w/DenseFusion)). Unzip it and link the unzipped ``Linemod_preprocessed/`` to ``ffb6d/datasets/linemod/Linemod_preprocessed``:
-  ```shell
-  ln -s path_to_unzipped_Linemod_preprocessed ffb6d/dataset/linemod/
-  ```
-  Generate rendered and fused data following [raster_triangle](https://github.com/ethnhe/raster_triangle).
 
 - **YCB-Video:** Download the YCB-Video Dataset from [PoseCNN](https://rse-lab.cs.washington.edu/projects/posecnn/). Unzip it and link the unzipped```YCB_Video_Dataset``` to ```ffb6d/datasets/ycb/YCB_Video_Dataset```:
 
   ```shell
   ln -s path_to_unzipped_YCB_Video_Dataset ffb6d/datasets/ycb/
   ```
+## Training and evaluating
+### Training on the YCB-Video Dataset
+- Start training on the YCB-Video Dataset by:
+  ```shell
+  # commands in train_ycb.sh
+  n_gpu=8  # number of gpu to use
+  python3 -m torch.distributed.launch --nproc_per_node=$n_gpu train_ycb.py --gpus=$n_gpu
+  ```
+  The trained model checkpoints are stored in ``train_log/ycb/checkpoints/``
+### Evaluating on the YCB-Video Dataset
+- Start evaluating by:
+  ```shell
+  # commands in test_ycb.sh
+  tst_mdl=train_log/ycb/checkpoints/FFB6D_best.pth.tar  # checkpoint to test.
+  python3 -m torch.distributed.launch --nproc_per_node=1 train_ycb.py --gpu '0' -eval_net -checkpoint $tst_mdl -test -test_pose # -debug
+  ```
+  You can evaluate different checkpoints by revising the ``tst_mdl`` to the path of your target model.
+### Demo/visualization on the YCB-Video Dataset
+- After training your model or downloading the pre-trained model, you can start the demo by:
+  ```shell
+  # commands in demo_ycb.sh
+  tst_mdl=train_log/ycb/checkpoints/FFB6D_best.pth.tar
+  python3 -m demo -checkpoint $tst_mdl -dataset ycb
+  ```
+  The visualization results will be stored in ```train_log/ycb/eval_results/pose_vis```.
+## Results
+- Evaluation result without any post refinement on the YCB-Video dataset:
