@@ -8,3 +8,44 @@ This is the source code for my work on 6D object pose estimation during my gradu
 
 We follow [FFB6D](https://arxiv.org/abs/2103.02242v1) as the base framework, differently, we utilize [BoTNet](https://arxiv.org/abs/2101.11605) instead of [ResNet](https://arxiv.org/abs/1512.03385) as the feature extractor of RGB images. The design of BoTNet-50 is simple: replace the final three spatial (3×3) convolutions in ResNet50 with Multi-Head Self-Attention (MHSA) layers that
 implement global self-attention over a 2D featuremap. This allows us to obtain abstract and low resolution featuremaps from large images through convolutions, which are subsequently processed and aggregated using global self-attention.
+
+
+## Installation
+- Install CUDA
+- Install the required packages：
+  ```shell
+  pip3 install -r requirement.txt 
+  ```
+- Install [apex](https://github.com/NVIDIA/apex)(Optional):
+  ```shell
+  git clone https://github.com/NVIDIA/apex
+  cd apex
+  export TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5"  # set the target architecture manually, suggested in issue https://github.com/NVIDIA/apex/issues/605#issuecomment-554453001
+  pip3 install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+  cd ..
+  ```
+- Install [normalSpeed](https://github.com/hfutcgncas/normalSpeed), a fast and light-weight normal map estimator:
+  ```shell
+  git clone https://github.com/hfutcgncas/normalSpeed.git
+  cd normalSpeed/normalSpeed
+  python3 setup.py install --user
+  cd ..
+  ```
+- Compile [RandLA-Net](https://github.com/qiqihaer/RandLA-Net-pytorch) operators:
+  ```shell
+  cd ffb6d/models/RandLA/
+  sh compile_op.sh
+  ```
+
+## Datasets
+- **LineMOD:** Download the preprocessed LineMOD dataset from [onedrive link](https://hkustconnect-my.sharepoint.com/:u:/g/personal/yhebk_connect_ust_hk/ETW6iYHDbo1OsIbNJbyNBkABF7uJsuerB6c0pAiiIv6AHw?e=eXM1UE) or [google drive link](https://drive.google.com/drive/folders/19ivHpaKm9dOrr12fzC8IDFczWRPFxho7) (refer from [DenseFusion](https://github.com/j96w/DenseFusion)). Unzip it and link the unzipped ``Linemod_preprocessed/`` to ``ffb6d/datasets/linemod/Linemod_preprocessed``:
+  ```shell
+  ln -s path_to_unzipped_Linemod_preprocessed ffb6d/dataset/linemod/
+  ```
+  Generate rendered and fused data following [raster_triangle](https://github.com/ethnhe/raster_triangle).
+
+- **YCB-Video:** Download the YCB-Video Dataset from [PoseCNN](https://rse-lab.cs.washington.edu/projects/posecnn/). Unzip it and link the unzipped```YCB_Video_Dataset``` to ```ffb6d/datasets/ycb/YCB_Video_Dataset```:
+
+  ```shell
+  ln -s path_to_unzipped_YCB_Video_Dataset ffb6d/datasets/ycb/
+  ```
