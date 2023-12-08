@@ -111,3 +111,4 @@ implement global self-attention over a 2D featuremap. This allows us to obtain a
     </tr>
   </tbody>
   </table>
+  * These data are gathered on our platform using the same hyperparameters.
