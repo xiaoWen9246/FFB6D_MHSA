@@ -71,6 +71,7 @@ implement global self-attention over a 2D featuremap. This allows us to obtain a
   The visualization results will be stored in ```train_log/ycb/eval_results/pose_vis```.
 ## Results
 - Evaluation result without any post refinement on the YCB-Video dataset:
+  
   <table class="tg">
   <thead>
     <tr>
