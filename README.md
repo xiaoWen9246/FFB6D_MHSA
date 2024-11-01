@@ -112,3 +112,7 @@ implement global self-attention over a 2D featuremap. This allows us to obtain a
   </tbody>
   </table>
   * These data are gathered on our platform using the same hyperparameters.
+
+
+- Results of pose estimation on the YCB-Video test set：
+  ![Logo](figs/pose_vis.jpg)
